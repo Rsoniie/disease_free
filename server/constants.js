@@ -1,0 +1,2 @@
+dbName = "disease"
+export {dbName};
