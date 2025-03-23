@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
-import { internal_error_code, internal_error_message } from '../utils/apiResponse.js';
-import { dbName } from '../constants.js';
+import apiResponse from '../utils/apiResponse.js';
+import dbName  from '../constants.js';
 
 const uri = process.env.MONGO_URI;
+console.log("this is mongodb uri", uri)
 
 const connectDb = async(req, res) => {
     try{
@@ -11,7 +12,7 @@ const connectDb = async(req, res) => {
     }catch(error)
     {
         console.log("Error in catch block of connectDB", error);
-        res.status(`${internal_error_code}`).json({message : `${internal_error_message}`});
+       return res.status(500).json({message :"Internal Server error"});
     }
 }
 

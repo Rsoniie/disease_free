@@ -1,2 +1,2 @@
-dbName = "disease"
-export {dbName};
+const dbName = "disease"
+export default dbName;

@@ -5,6 +5,7 @@ const apiResponse = {
     unauthorized_code : 401,
     success_code: 200,
     created_code : 201,
+    already_exist : 409,
 
 }
 

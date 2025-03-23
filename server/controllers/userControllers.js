@@ -1,7 +1,6 @@
 import User from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import apiResponse from "../utils/apiResponse.js";
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const userLogin = async(req, res) => {
@@ -12,14 +11,14 @@ const userLogin = async(req, res) => {
            return res.status(apiResponse.bad_request_code).json({message: "Enter all credentials"});
         }
 
-        const user = await user.findOne({username : username});
+        const user = await User.findOne({username : username});
         if(!user)
         {
             return res.status(apiResponse.not_found_code).json({message: "User not found"});
         }
         const userPassword = user.password;
 
-        const isPassswordCorrect = await bcrypt.compare(userPassword, password);
+        const isPassswordCorrect = await bcrypt.compare(password, userPassword);
         if(!isPassswordCorrect)
         {
             return res.status(apiResponse.unauthorized_code).json({message: "Password is wrong"});
@@ -33,24 +32,36 @@ const userLogin = async(req, res) => {
 
     } catch (error) {
         console.log("Error from catch block of login user", error);
-        res.status(apiResponse.internal_error_code).json({message:"Internal Server error", error: error});
+        return res.status(apiResponse.internal_error_code).json({message:"Internal Server error", error: error});
     }
 }
 
 const signUp = async(req, res) => {
     try {
         const {username, email, password} = req.body;
+        const existing_user = await User.findOne({username:username});
+        if(existing_user)
+        {
+            return res.status(apiResponse.already_exist).json({message : "Username already exist"});
+        }
+        const existing_email = await User.findOne({email: email});
+        if(existing_email)
+        {
+            return res.status(apiResponse.already_exist).json({message: "email already exist"});
+        }
 
-        const salt = 10;
-        const hashed_password = bcrypt.hash(password, salt);
+        const salt =  await bcrypt.genSalt(10);
+        const hashed_password = await bcrypt.hash(password, salt);
 
         const newUser = new User({
             username : username, 
             email : email,
             password : hashed_password
         });
+        console.log("till new user done");
 
         await newUser.save();
+        console.log("User created successfully");
         const token = jwt.sign({useraname: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
         console.log("token while signup", token);
 
@@ -58,9 +69,11 @@ const signUp = async(req, res) => {
 
     } catch (error) {
         console.log("This is error from error", error);
-        res.status(apiResponse.internal_error_code).json({message: "Internal Server error"});
+        return res.status(apiResponse.internal_error_code).json({message: "Internal Server error"});
     }
 }
+
+
 
 
 
