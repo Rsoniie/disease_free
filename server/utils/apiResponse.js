@@ -3,6 +3,8 @@ const apiResponse = {
     bad_request_code : 400,
     not_found_code: 404,
     unauthorized_code : 401,
+    success_code: 200,
+    created_code : 201,
 
 }
 
