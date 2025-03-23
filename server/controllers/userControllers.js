@@ -27,6 +27,7 @@ const userLogin = async(req, res) => {
 
 
         const token = jwt.sign({username: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
+        console.log(token);
 
         return res.status(apiResponse.success_code).json({message: "LoggedIn Successfully", token: token});
 
@@ -50,8 +51,10 @@ const signUp = async(req, res) => {
         });
 
         await newUser.save();
+        const token = jwt.sign({useraname: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
+        console.log("token while signup", token);
 
-        return res.status(apiResponse.created_code).json({message: "User Created Successfully"});
+        return res.status(apiResponse.created_code).json({message: "User Created Successfully", token: token});
 
     } catch (error) {
         console.log("This is error from error", error);
