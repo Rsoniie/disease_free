@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Leaflet Multi-Color Circles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #mapid {
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="mapid"></div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    var map = L.map('mapid').setView([20.59, 78.96], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    var circleData = [
+      { lat: 28.7041, lng: 77.1025, color: 'red',    radius: 40000 },
+      { lat: 19.0760, lng: 72.8777, color: 'red',    radius: 40000 },
+      { lat: 21.1458, lng: 79.0882, color: 'red',    radius: 40000 },
+      { lat: 13.0827, lng: 80.2707, color: 'orange', radius: 30000 },
+      { lat: 12.9716, lng: 77.5946, color: 'orange', radius: 30000 },
+      { lat: 22.5726, lng: 88.3639, color: 'orange', radius: 30000 },
+      { lat: 26.8467, lng: 80.9462, color: 'green',  radius: 20000 },
+      { lat: 25.3353, lng: 83.0073, color: 'green',  radius: 20000 },
+      { lat:  9.9252, lng: 78.1198, color: 'green',  radius: 20000 }
+    ];
+
+    circleData.forEach(function(item) {
+      L.circle([item.lat, item.lng], {
+        color: item.color,
+        fillColor: item.color,
+        fillOpacity: 0.5,
+        radius: item.radius
+      }).addTo(map);
+    });
+  </script>
+</body>
+</html>
