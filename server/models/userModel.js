@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  todo: [{ title: { type: String, required: true }, link: { type: String } }],
+  todo: [{ title: { type: String, required: true }, link: { type: String }, time: {type : Date} }],
 });
 
 const User = new mongoose.model("User", userSchema);
