@@ -11,7 +11,12 @@ const Verify = async(req, res, next) => {
 
         const decoded_user = jwt.verify(token, process.env.PRIVATE_KEY);
 
-        const user = decoded_user;
+        // console.log("This is decodedd user", decoded_user);
+
+        req.user = decoded_user;
+
+        // console.log(req.user.id)
+
 
         next();
     } catch (error) {

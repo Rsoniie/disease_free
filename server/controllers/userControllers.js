@@ -26,7 +26,7 @@ const userLogin = async(req, res) => {
         }
 
 
-        const token = jwt.sign({username: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
+        const token = jwt.sign({id:user._id, username: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
         console.log(token);
 
         return res.status(apiResponse.success_code).json({message: "LoggedIn Successfully", token: token});
@@ -63,7 +63,7 @@ const signUp = async(req, res) => {
 
         await newUser.save();
         console.log("User created successfully");
-        const token = jwt.sign({useraname: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
+        const token = jwt.sign({id:newUser._id, useraname: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
         console.log("token while signup", token);
         res.cookie('auth_token', token, {
             httpOnly: true,

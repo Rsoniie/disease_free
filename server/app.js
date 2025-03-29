@@ -4,8 +4,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectDb from './db/dbConnection.js';
 
-import userRoutes from './routes/userRoutes.js'
+import userRoutes from './routes/userRoutes.js';
 import todoRoutes from './routes/todoRoutes.js';
+import appRoutes from './routes/appRoutes.js';
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ await connectDb();
 
 app.use('/api/user', userRoutes);
 app.use('/api/todo', todoRoutes);
+app.use('/api/appn', appRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
