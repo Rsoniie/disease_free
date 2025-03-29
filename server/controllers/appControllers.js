@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from "../models/userModel.js";
 import apiResponse from "../utils/apiResponse.js";
 import analysis from '../utils/analysis.js';
+import generic from '../utils/generic.js';
 
 const addTodo = async (req, res) => {
   try {
@@ -45,7 +46,7 @@ const analyzeForm = async (req, res) => {
   try {
 
     const { payload } = req.body;
-    console.log("this is payload from analyze form", payload);
+    // console.log("this is payload from analyze form", payload);
     const todo_list = await analysis(payload);
     return res
       .status(apiResponse.success_code)
@@ -56,4 +57,22 @@ const analyzeForm = async (req, res) => {
   }
 };
 
-export { addTodo, analyzeForm };
+const genericPrecautions = async(req, res) => {
+  try {
+    const todo_list = await generic();
+
+    if(!todo_list || todo_list.length === 0)
+    {
+      return res.status(apiResponse.bad_request_code).json({message : "No precautions provided"});
+    }
+
+    return res.status(apiResponse.success_code).json({message:"fetch precautions done", data: todo_list});
+
+  } catch (error) {
+    console.log("Error from catch block from genericPrecautions");
+    return res.status(apiResponse.internal_error_code).json({message: "Internal server error"});
+
+  }
+}
+
+export { addTodo, analyzeForm, genericPrecautions};
