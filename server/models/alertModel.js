@@ -12,10 +12,10 @@ const alertSchema = new Schema({
         required : true
     },
     link : {
-        type: URL,
+        type: String,
     },
     icon : {
-        type : URL
+        type : String
     }
 });
 

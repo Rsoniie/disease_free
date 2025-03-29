@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import bcrypt from 'bcrypt';
 import apiResponse from "../utils/apiResponse.js";
 import jwt from 'jsonwebtoken';
+import cookieParser from "cookie-parser";
 
 const userLogin = async(req, res) => {
     try {
@@ -64,6 +65,12 @@ const signUp = async(req, res) => {
         console.log("User created successfully");
         const token = jwt.sign({useraname: username}, `${process.env.PRIVATE_KEY}`, {expiresIn: '1h'});
         console.log("token while signup", token);
+        res.cookie('auth_token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Strict',
+            maxAge: 3600000, 
+        })
 
         return res.status(apiResponse.created_code).json({message: "User Created Successfully", token: token});
 
