@@ -1,20 +1,16 @@
-
-import Alerts from "./pages/Alert"
-import HomeScreen from "./pages/Home"
-import TodoList from "./pages/Todo"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomeScreen from "./pages/Home";
+import Alerts      from "./pages/Alert";
+import TodoList    from "./pages/Todo";
 
 export default function App() {
   return (
-    <>
-    <div>
-      {/* <h1>This is Heading page</h1>
-       */}
-       {/* <HomeScreen/> */}
-
-       {/* <TodoList/> */}
-
-       <Alerts/>
-    </div>
-    </>
-  )
+    <BrowserRouter> 
+      <Routes>
+        <Route path="/"       element={<HomeScreen />} />
+        <Route path="/alerts" element={<Alerts />}     />
+        <Route path="/todo"   element={<TodoList />}   />
+      </Routes>
+    </BrowserRouter>
+  );
 }

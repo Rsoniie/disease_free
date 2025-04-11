@@ -1,29 +1,12 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Checkbox,
-  Card,
-  CardContent,
-  Avatar,
-  IconButton,
-  Badge,
-  Chip,
-} from "@mui/material";
-import {
-  FiHome,
-  FiCheckSquare,
-  FiBell,
-  FiSearch,
-  FiMenu,
-} from "react-icons/fi";
+import { FiHome, FiCheckSquare, FiBell, FiSearch, FiMenu } from "react-icons/fi";
 import { FaTemperatureHigh, FaHeadSideCough } from "react-icons/fa";
+import Footer from "../components/Footer";
 
-// Reusable data
 const measures = [
   { 
     text: "Use prescribed medications", 
-    icon: <FaTemperatureHigh size={14} />,
+    icon: <FaTemperatureHigh className="text-indigo-600" />,
     category: "fever" 
   },
   { 
@@ -45,7 +28,7 @@ const measures = [
   },
   { 
     text: "Using mosquito coils or repellents", 
-    icon: <FaHeadSideCough size={14} />,
+    icon: <FaHeadSideCough className="text-indigo-600" />,
     category: "dengue" 
   },
   { 
@@ -62,265 +45,98 @@ const activities = [
 ];
 
 const Section = ({ title, icon, category }: { title: string; icon?: React.ReactNode; category?: string }) => (
-  <Box mb={3}>
-    <Box display="flex" alignItems="center" gap={1.5} mb={2.5}>
-      <Avatar sx={{ 
-        bgcolor: "primary.light", 
-        width: 36, 
-        height: 36,
-        "& svg": { color: "primary.main" }
-      }}>
+  <div className="mb-6">
+    <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center justify-center w-9 h-9 rounded-full bg-indigo-100 text-indigo-600">
         {icon}
-      </Avatar>
-      <Typography variant="h6" fontWeight={700} color="text.primary">
-        {title}
-      </Typography>
-    </Box>
+      </div>
+      <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+    </div>
 
     {measures
       .filter(item => item.category === category || item.category === "both")
       .map((item, idx) => (
-        <Box
+        <div
           key={idx}
-          display="flex"
-          alignItems="center"
-          mb={1.5}
-          sx={{
-            p: 1.5,
-            borderRadius: 2,
-            bgcolor: "background.paper",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-            "&:hover": { 
-              bgcolor: "action.hover",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.1)"
-            },
-          }}
+          className="flex items-center mb-3 p-3 bg-white rounded-xl border border-gray-200 hover:bg-gray-50 hover:shadow-sm transition-all"
         >
-          <Checkbox
-            size="small"
-            sx={{ 
-              color: "primary.main",
-              "&.Mui-checked": {
-                color: "primary.main",
-              },
-            }}
+          <input 
+            type="checkbox" 
+            className="h-4 w-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
           />
-          <Typography variant="body1" sx={{ flex: 1, ml: 1 }}>
+          <span className="ml-3 flex-1 text-gray-800">
             {item.text}
             {item.important && (
-              <Chip 
-                label="Important" 
-                size="small" 
-                sx={{ 
-                  ml: 1,
-                  height: 20,
-                  fontSize: "0.65rem",
-                  bgcolor: "error.light",
-                  color: "error.main"
-                }} 
-              />
+              <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+                Important
+              </span>
             )}
-          </Typography>
+          </span>
           {item.icon && (
-            <Box 
-              sx={{ 
-                ml: 1,
-                color: "primary.main",
-                display: "flex",
-                alignItems: "center"
-              }}
-            >
+            <div className="ml-2 text-indigo-600">
               {item.icon}
-            </Box>
+            </div>
           )}
-        </Box>
+        </div>
       ))}
-  </Box>
+  </div>
 );
 
 const TodoList: React.FC = () => {
   const [activeTab, setActiveTab] = React.useState("todo");
 
   return (
-    <Box 
-      sx={{ 
-        maxWidth: "md", 
-        mx: "auto", 
-        px: { xs: 2, sm: 3 }, 
-        pb: 10, 
-        bgcolor: "background.default",
-        minHeight: "100vh"
-      }}
-    >
+    <div className="max-w-3xl mx-auto px-4 pb-20 bg-gray-50 min-h-screen">
       {/* Header */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          py: 3,
-          position: "sticky",
-          top: 0,
-          bgcolor: "background.default",
-          zIndex: 10,
-        }}
-      >
-        <Typography variant="h5" fontWeight={800} color="text.primary">
-          Health Checklist
-        </Typography>
-        <Box display="flex" gap={0.5}>
-          <IconButton sx={{ color: "text.secondary" }}>
-            <FiSearch size={20} />
-          </IconButton>
-          <IconButton sx={{ color: "text.secondary" }}>
-            <Badge badgeContent={3} color="error">
-              <FiBell size={20} />
-            </Badge>
-          </IconButton>
-          <IconButton sx={{ color: "text.secondary" }}>
-            <FiMenu size={20} />
-          </IconButton>
-        </Box>
-      </Box>
+      <header className="flex justify-between items-center py-6 sticky top-0 bg-gray-50 z-10">
+        <h1 className="text-2xl font-bold text-gray-900">Health Checklist</h1>
+        <div className="flex gap-4">
+          <button className="text-gray-500 hover:text-indigo-600 transition-colors">
+            <FiSearch className="text-xl" />
+          </button>
+          <button className="text-gray-500 hover:text-indigo-600 transition-colors">
+            <FiMenu className="text-xl" />
+          </button>
+        </div>
+      </header>
 
       {/* Main content */}
-      <Card sx={{ 
-        mb: 3, 
-        borderRadius: 3, 
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        border: "1px solid",
-        borderColor: "divider"
-      }}>
-        <CardContent sx={{ p: 3 }}>
-          <Section
-            title="Fever Management"
-            icon={<FaTemperatureHigh />}
-            category="fever"
-          />
-        </CardContent>
-      </Card>
+      <div className="mb-6 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <Section
+          title="Fever Management"
+          icon={<FaTemperatureHigh />}
+          category="fever"
+        />
+      </div>
 
-      <Card sx={{ 
-        mb: 3, 
-        borderRadius: 3, 
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-        border: "1px solid",
-        borderColor: "divider"
-      }}>
-        <CardContent sx={{ p: 3 }}>
-          <Section
-            title="Dengue Prevention"
-            icon={<FaHeadSideCough />}
-            category="dengue"
-          />
-        </CardContent>
-      </Card>
+      <div className="mb-6 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <Section
+          title="Dengue Prevention"
+          icon={<FaHeadSideCough />}
+          category="dengue"
+        />
+      </div>
 
       {/* Activity cards */}
-      <Typography variant="h6" fontWeight={700} mb={2} color="text.primary">
-        Your Activity
-      </Typography>
-      <Box display="flex" flexDirection="column" gap={2} mb={4}>
-        {activities.map((activity, index) => (
-          <Card
-            key={index}
-            sx={{
-              borderRadius: 2,
-              border: "1px solid",
-              borderColor: "divider",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-              transition: "all 0.2s ease",
-              "&:hover": {
-                transform: "translateY(-2px)",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-              }
-            }}
-          >
-            <CardContent sx={{ py: 2, px: 2.5 }}>
-              <Box display="flex" alignItems="center">
-                <Box sx={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  bgcolor: "primary.main",
-                  mr: 1.5
-                }} />
-                <Typography variant="body1">{activity}</Typography>
-              </Box>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
-
-      {/* Bottom Navigation */}
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          maxWidth: "md",
-          mx: "auto",
-          bgcolor: "background.paper",
-          boxShadow: "0 -2px 10px rgba(0,0,0,0.1)",
-          borderTopLeftRadius: 16,
-          borderTopRightRadius: 16,
-          border: "1px solid",
-          borderColor: "divider",
-          zIndex: 10,
-        }}
-      >
-        <Box 
-          display="flex" 
-          justifyContent="space-around" 
-          alignItems="center" 
-          py={1.5}
-        >
-          {[
-            { icon: <FiHome size={20} />, label: "Home", value: "home" },
-            { icon: <FiCheckSquare size={20} />, label: "Todo", value: "todo" },
-            { icon: <FiBell size={20} />, label: "Alerts", value: "alerts" },
-          ].map((item) => (
-            <Box
-              key={item.value}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                cursor: "pointer",
-                px: 2,
-                py: 1,
-                borderRadius: 2,
-                ...(activeTab === item.value && {
-                  "& svg": { color: "primary.main" },
-                  "& .MuiTypography-root": { color: "primary.main" },
-                }),
-              }}
-              onClick={() => setActiveTab(item.value)}
+      <div className="mb-6 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4">Your Activity</h2>
+        <div className="space-y-3">
+          {activities.map((activity, index) => (
+            <div 
+              key={index}
+              className="p-3 bg-white rounded-lg border border-gray-200 hover:shadow-sm transition-shadow"
             >
-              {item.value === "alerts" ? (
-                <Badge badgeContent={3} color="error">
-                  {item.icon}
-                </Badge>
-              ) : (
-                item.icon
-              )}
-              <Typography 
-                variant="caption" 
-                sx={{ 
-                  mt: 0.5,
-                  fontSize: "0.7rem",
-                  fontWeight: 600,
-                  color: "text.secondary",
-                }}
-              >
-                {item.label}
-              </Typography>
-            </Box>
+              <div className="flex items-center">
+                <div className="w-2 h-2 rounded-full bg-indigo-600 mr-3"></div>
+                <span className="text-gray-800">{activity}</span>
+              </div>
+            </div>
           ))}
-        </Box>
-      </Box>
-    </Box>
+        </div>
+      </div>
+
+<Footer/>
+    </div>
   );
 };
 
