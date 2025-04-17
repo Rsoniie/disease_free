@@ -8,12 +8,19 @@ import { FaTemperatureHigh, FaHeadSideCough, FaTired, FaHeadSideMask, FaRegLaugh
 import { GiStomach, GiMuscleUp, GiRunningShoe } from 'react-icons/gi';
 import { MdSick } from 'react-icons/md';
 import Footer from '../components/Footer';
+import { useNavigate } from 'react-router';
+
+
 
 const HomeScreen: React.FC = () => {
+
+  const navigate = useNavigate();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDiseaseClick = (disease: string) => {
-    alert(`${disease} button clicked`);
+    navigate(`/questions/:${disease}`);
+
     setIsDropdownOpen(false);
   };
 
@@ -101,14 +108,17 @@ const HomeScreen: React.FC = () => {
   ];
 
   const diseaseList = [
-    'Pollen Allergy / Hay Fever',
+    'Pollen Allergy',
     'Dust Mite Allergy',
     'Insect Allergy',
     'Mold Allergy',
     'Allergic Rhinitis',
   ];
 
+ 
   return (
+
+    
     <div className="max-w-3xl mx-auto px-4 pb-20 bg-gray-50 min-h-screen">
       {/* Header */}
       <header className="flex justify-between items-center py-6 sticky top-0 bg-gray-50 z-10">
