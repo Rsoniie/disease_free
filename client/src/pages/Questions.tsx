@@ -1,81 +1,8 @@
-// import { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useParams } from "react-router-dom";
-
-// const Questions = () => {
-//   interface Question {
-//     question: string;
-//     category: string;
-//     type: string;
-//   }
-  
-//   const [questions, setQuestions] = useState<Question[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const { disease } = useParams();
-
-//   useEffect(() => {
-//     const fetchQuestions = async () => {
-//       try {
-//         let allergy = "";
-//         switch (disease) {
-//           case "Pollen Allergy":
-//             allergy = "pollen";
-//             break;
-//           case "Dust Mite Allergy":
-//             allergy = "mite";
-//             break;
-//           case "Insect Allergy":
-//             allergy = "insect";
-//             break;
-//           case "Mold Allergy":
-//             allergy = "mold";
-//             break;
-//           default:
-//             allergy = "rhinitis";
-//         }
-
-//         const response = await axios.get(
-//           `http://localhost:5000/api/questions/${allergy}`
-//         );
-//         setQuestions(response.data.data);
-//         console.log("API Response:", response.data.data);
-//       } catch (error) {
-//         console.error("Error fetching questions:", error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchQuestions();
-//   }, [disease]);
-
-//   if (loading) {
-//     return <div>Loading questions...</div>;
-//   }
-
-//   return (
-//       <div>
-//           <h1>Questions for {disease}</h1>
-//           {questions.map((question, index) => (
-//               <div key={index}>
-//                   <h3>{question.question}</h3>
-//                   <p>Category: {question.category}</p>
-//                   <p>Type: {question.type}</p>
-//               </div>
-//           ))}
-//       </div>
-//   );
-// };
-
-// export default Questions;
-
-
-
-
 
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Question {
   id: number;
@@ -85,6 +12,8 @@ interface Question {
 }
 
 const Questions = () => {
+
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [loading, setLoading] = useState(true);
@@ -197,8 +126,6 @@ const Questions = () => {
                   <h3 className="text-lg font-medium text-gray-900 mt-1">
                     {question.question}
                   </h3>
-
-                  {/* Scale Type Question */}
                   {question.type === 'scale' && (
                     <div className="mt-4">
                       <div className="flex justify-between mb-2">
@@ -300,6 +227,7 @@ const Questions = () => {
           <div className="mt-8 flex justify-end">
             <button
               type="submit"
+              onClick={() => {navigate("/add_todo")}}
               className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
             >
               Submit Response

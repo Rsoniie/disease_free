@@ -4,6 +4,7 @@ import Alerts      from "./pages/Alert";
 import TodoList    from "./pages/Todo";
 import Login from "./pages/Login";
 import Questions from "./pages/Questions";
+import AddTodo from "./pages/Addtodo";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<HomeScreen />} />
         <Route path="/questions/:disease" element={<Questions />} />
+        <Route path="/add_todo" element={<AddTodo />} />
       </Routes>
    </BrowserRouter>
 
