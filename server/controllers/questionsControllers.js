@@ -219,7 +219,6 @@ const Insect = async(req, res) => {
 };
 
 
-
 const Mold = async(req, res) => {
     try {
         const questions = [
