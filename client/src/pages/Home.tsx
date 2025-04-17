@@ -19,7 +19,7 @@ const HomeScreen: React.FC = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDiseaseClick = (disease: string) => {
-    navigate(`/questions/:${disease}`);
+    navigate(`/questions/${disease}`);
 
     setIsDropdownOpen(false);
   };
