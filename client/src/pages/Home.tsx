@@ -1,15 +1,22 @@
 
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { FiSearch, FiMenu, FiArrowUpRight} from 'react-icons/fi';
+import { FiSearch, FiMenu, FiArrowUpRight } from 'react-icons/fi';
 import { FaTemperatureHigh, FaHeadSideCough, FaTired, FaHeadSideMask, FaRegLaughSquint } from 'react-icons/fa';
 import { GiStomach, GiMuscleUp, GiRunningShoe } from 'react-icons/gi';
 import { MdSick } from 'react-icons/md';
 import Footer from '../components/Footer';
 
-
 const HomeScreen: React.FC = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const handleDiseaseClick = (disease: string) => {
+    alert(`${disease} button clicked`);
+    setIsDropdownOpen(false);
+  };
+
   const chartData = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
@@ -93,6 +100,14 @@ const HomeScreen: React.FC = () => {
     }
   ];
 
+  const diseaseList = [
+    'Pollen Allergy / Hay Fever',
+    'Dust Mite Allergy',
+    'Insect Allergy',
+    'Mold Allergy',
+    'Allergic Rhinitis',
+  ];
+
   return (
     <div className="max-w-3xl mx-auto px-4 pb-20 bg-gray-50 min-h-screen">
       {/* Header */}
@@ -107,6 +122,41 @@ const HomeScreen: React.FC = () => {
           </button>
         </div>
       </header>
+
+      {/* Disease Dropdown */}
+      <section className="mb-6 relative">
+        <button 
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-medium flex justify-between items-center hover:bg-indigo-700 transition-colors"
+        >
+          View Common Diseases
+          <svg 
+            className={`w-5 h-5 ml-2 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        {isDropdownOpen && (
+          <div className="absolute z-10 w-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200">
+            {diseaseList.map((disease, index) => (
+              <button
+                key={index}
+                onClick={() => handleDiseaseClick(disease)}
+                className={`w-full text-left px-4 py-3 hover:bg-indigo-50 transition-colors ${
+                  index !== diseaseList.length - 1 ? 'border-b border-gray-100' : ''
+                }`}
+              >
+                {disease}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
 
       {/* Seasonal Disease Overview */}
       <section className="mb-6 bg-white p-5 rounded-xl shadow-sm border border-gray-100">
